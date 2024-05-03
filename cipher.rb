@@ -1,17 +1,20 @@
-LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-           "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-
 def caesar_cipher(string, number)
-  splitted_string = string.upcase.split("")
-  new_string = ""
-  splitted_string.each do |char|
-    index = LETTERS.index(char) + number.to_i
-    if index > LETTERS.length - 1
-      index = index - LETTERS.length
+  alphabet_lower = ("a".."z").to_a
+  alphabet_upper = ("A".."Z").to_a
+
+  cipher_text = ""
+  string.each_char do |char|
+    if alphabet_lower.include?(char)
+      index = (alphabet_lower.index(char) + number.to_i) % 26
+      cipher_text << alphabet_lower[index]
+    elsif alphabet_upper.include?(char)
+      index = (alphabet_upper.index(char) + number.to_i) % 26
+      cipher_text << alphabet_upper[index]
+    else
+      cipher_text << char
     end
-
-    new_string << LETTERS[new_index]
   end
-
-  puts new_string
+  puts cipher_text
 end
+
+caesar_cipher("My Name is Alexander", 4)
